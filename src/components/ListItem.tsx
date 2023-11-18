@@ -50,7 +50,7 @@ const ListItem = ({ task }: IListItemProps) => {
     `}
     >
       <div
-        className="ml-2 w-100"
+        className="ml-2 w-full mr-2"
       >
         <p className={`
         text-lg font-medium text-white truncate
