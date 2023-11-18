@@ -10,64 +10,67 @@ interface IListItemProps {
 }
 
 const ListItem = ({ task }: IListItemProps) => {
-
   const { deleteTask, updateTask } = useTaskStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 
-  const removeItem = (id:number) => {
+  const removeItem = (id: number) => {
     deleteTask(id);
-  }
+  };
 
-  const toggleIsEditing = (isEditing:boolean, taskName?:string) => {
+  const toggleIsEditing = (isEditing: boolean, taskName?: string) => {
     setIsEditing(!isEditing);
     setEditValue(taskName || "");
-  }
+  };
 
   const submitEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedTask:ITask = {
+    const updatedTask: ITask = {
       date: task.date,
       id: task.id,
       name: editValue,
-      status: task.status
-    }
-    updateTask({id: updatedTask.id, task: updatedTask});
+      status: task.status,
+    };
+    updateTask({ id: updatedTask.id, task: updatedTask });
     toggleIsEditing(isEditing);
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value);
   };
-  
+
   return (
     <li
       id={`task-${task.id}`}
       className={`
-      relative rounded-md flex items-center justify-between shadow-sm block w-full shadow-zinc-800 px-3 py-2 pl-[2.3rem] hover:bg-zinc-950/70 transition-all bg-zinc-900 after:w-5 after:h-5 after:rounded-full after:absolute after:content-'' after:z-10 after:left-2 after:top-[50%] after:translate-y-[-50%]
+      relative rounded-md flex items-center justify-between shadow-sm w-full shadow-zinc-800 px-3 py-2 pl-[2.3rem] hover:bg-zinc-950/70 transition-all bg-zinc-900 after:w-5 after:h-5 after:rounded-full after:absolute after:content-'' after:z-10 after:left-2 after:top-[50%] after:translate-y-[-50%]
       ${task.status ? "after:bg-green-500" : "after:bg-red-500"}
     `}
     >
-      <div
-        className="ml-2 w-full mr-2"
-      >
-        <p className={`
-        text-lg font-medium text-white truncate
-        ${isEditing ? "hidden" : ""}
-        `}>{task.name}</p>
+      <div className="ml-2 w-full mr-2">
+        <p
+          className={`
+            text-lg font-medium text-white truncate
+            w-[32ch]
+            ${isEditing ? "hidden" : ""}
+          `}
+        >
+          {task.name}
+        </p>
 
-      <form id={"edit"+task.id} onSubmit={submitEdit}>
-        <input className={`
+        <form id={"edit" + task.id} onSubmit={submitEdit}>
+          <input
+            className={`
           block mb-1
           w-full
           ${!isEditing ? "hidden" : ""}
-        `} 
-        value={editValue}
-        onChange={handleChange}
-        type="text"
-        />
+        `}
+            value={editValue}
+            onChange={handleChange}
+            type="text"
+          />
         </form>
-        
+
         <span className="text-sm font-mono">
           {new Date(task.date).toLocaleDateString("en-US", {
             year: "numeric",
@@ -76,27 +79,44 @@ const ListItem = ({ task }: IListItemProps) => {
           })}
         </span>
       </div>
-      <div className={`
+      <div
+        className={`
         flex gap-2
         ${isEditing ? "hidden" : ""}
-      `}>
-        <button onClick={() => toggleIsEditing(isEditing, task.name)} className="flex justify-center items-center bg-sky-700 h-[52px] w-[52px] rounded-lg hover:bg-sky-600">
-          <Pencil/>
+      `}
+      >
+        <button
+          onClick={() => toggleIsEditing(isEditing, task.name)}
+          className="flex justify-center items-center bg-sky-700 h-[52px] w-[52px] rounded-lg hover:bg-sky-600"
+        >
+          <Pencil />
         </button>
-        <button onClick={() => removeItem(task.id)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
-          <Trash/>
+        <button
+          onClick={() => removeItem(task.id)}
+          className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600"
+        >
+          <Trash />
         </button>
       </div>
 
-      <div className={`
+      <div
+        className={`
         flex gap-2
         ${!isEditing ? "hidden" : ""}
-      `}>
-        <button type="submit" form={"edit"+task.id} className="flex justify-center items-center bg-green-700 h-[52px] w-[52px] rounded-lg hover:bg-green-600">
-          <Check/>
+      `}
+      >
+        <button
+          type="submit"
+          form={"edit" + task.id}
+          className="flex justify-center items-center bg-green-700 h-[52px] w-[52px] rounded-lg hover:bg-green-600"
+        >
+          <Check />
         </button>
-        <button onClick={() => toggleIsEditing(isEditing, task.name)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
-          <CloseIcon/>
+        <button
+          onClick={() => toggleIsEditing(isEditing, task.name)}
+          className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600"
+        >
+          <CloseIcon />
         </button>
       </div>
     </li>
