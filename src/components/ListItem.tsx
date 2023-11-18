@@ -1,7 +1,7 @@
 import Trash from "./icons/Trash.tsx";
 import Pencil from "./icons/Pencil.tsx";
 import Check from "./icons/Check.tsx";
-import X from "./icons/X.tsx";
+import CloseIcon from "./icons/CloseIcon.tsx";
 import useTaskStore, { type ITask } from "../store/task.store.ts";
 import { useState } from "react";
 
@@ -96,7 +96,7 @@ const ListItem = ({ task }: IListItemProps) => {
           <Check/>
         </button>
         <button onClick={() => toggleIsEditing(isEditing)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
-          <X/>
+          <CloseIcon/>
         </button>
       </div>
     </li>
