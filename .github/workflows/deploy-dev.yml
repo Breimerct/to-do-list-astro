@@ -1,4 +1,4 @@
-name: GitHub Pages Astro CI
+name: GitHub Pages Astro CI - DEV
 
 on:
   # Activa el workflow cada vez que hay un push a la rama `main`
