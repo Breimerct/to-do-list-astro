@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://github.com/Breimerct/to-do-list-astro
     steps:
       - name: Install Dependencies (ejemplo con npm)
         run: npm run build
