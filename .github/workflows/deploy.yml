@@ -20,12 +20,18 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
+
+      # Puedes agregar aquí comandos adicionales antes de la construcción
+      - name: Install Dependencies (ejemplo con npm)
+        run: npm install
+      # - name: Run Tests (si tienes pruebas)
+      #   run: npm test
       - name: Install, build, and upload your site
         uses: withastro/action@v1
         # with:
         # path: . # La ubicación de la raíz de tu proyecto de Astro dentro del repositorio. (opcional)
         # node-version: 18 # La versión específica de Node que debe utilizarse para compilar tu proyecto. Por defecto es la 18. (opcional)
-        package-manager: npm@latest # El gestor de paquetes de Node que debe instalar las dependencias y compilar tu proyecto. Automáticamente detectadas con base en tu archivo lockfile. (opcional)
+        # package-manager: npm@latest # El gestor de paquetes de Node que debe instalar las dependencias y compilar tu proyecto. Automáticamente detectadas con base en tu archivo lockfile. (opcional)
 
   deploy:
     needs: build
@@ -34,6 +40,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Install Dependencies (ejemplo con npm)
+        run: npm run build
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
