@@ -60,6 +60,7 @@ const ListItem = ({ task }: IListItemProps) => {
       <form id={"edit"+task.id} onSubmit={submitEdit}>
         <input className={`
           block mb-1
+          w-full
           ${!isEditing ? "hidden" : ""}
         `} 
         value={editValue}
