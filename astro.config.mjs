@@ -8,5 +8,5 @@ export default defineConfig({
   integrations: [tailwind(), react()],
   output: "static",
   site: "https://breimerct.github.io",
-  base: "/to-do-list-astro",
+  base: "/to-do-list-astro-dev",
 });
