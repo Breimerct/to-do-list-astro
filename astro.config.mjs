@@ -6,7 +6,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
-  output: "server",
+  output: "static",
   site: "https://breimerct.github.io",
   base: "/to-do-list-astro",
 });
