@@ -26,7 +26,6 @@ const ListItem = ({ task }: IListItemProps) => {
 
   const submitEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e)
     const updatedTask:ITask = {
       date: task.date,
       id: task.id,
