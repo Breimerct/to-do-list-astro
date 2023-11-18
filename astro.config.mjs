@@ -7,7 +7,6 @@ import react from "@astrojs/react";
 export default defineConfig({
   integrations: [tailwind(), react()],
   output: "static",
-  buildOptions: {
-    baseUrl: "https://breimerct.github.io/to-do-list-astro/",
-  },
+  site: "https://breimerct.github.io",
+  base: "/to-do-list-astro",
 });
