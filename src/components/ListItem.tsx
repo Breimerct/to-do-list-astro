@@ -1,6 +1,9 @@
 import Trash from "./icons/Trash.tsx";
 import Pencil from "./icons/Pencil.tsx";
+import Check from "./icons/Check.tsx";
+import X from "./icons/X.tsx";
 import useTaskStore, { type ITask } from "../store/task.store.ts";
+import { useState } from "react";
 
 interface IListItemProps {
   task: ITask;
@@ -8,12 +11,36 @@ interface IListItemProps {
 
 const ListItem = ({ task }: IListItemProps) => {
 
-  const { deleteTask } = useTaskStore();
+  const { deleteTask, updateTask } = useTaskStore();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState("");
 
   const removeItem = (id:number) => {
     deleteTask(id);
   }
 
+  const toggleIsEditing = (isEditing:boolean, taskName?:string) => {
+    setIsEditing(!isEditing);
+    setEditValue(taskName || "");
+  }
+
+  const submitEdit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const updatedTask:ITask = {
+      date: task.date,
+      id: task.id,
+      name: editValue,
+      status: task.status
+    }
+    updateTask({id: updatedTask.id, task: updatedTask});
+    setIsEditing(!isEditing);
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue(e.target.value);
+  };
+  
   return (
     <li
       id={`task-${task.id}`}
@@ -22,9 +49,25 @@ const ListItem = ({ task }: IListItemProps) => {
       ${task.status ? "after:bg-green-500" : "after:bg-red-500"}
     `}
     >
-      <div>
-        <p className="text-lg font-medium text-white truncate">{task.name}</p>
+      <div
+        className="ml-2 w-100"
+      >
+        <p className={`
+        text-lg font-medium text-white truncate
+        ${isEditing ? "hidden" : ""}
+        `}>{task.name}</p>
 
+      <form id="editName" onSubmit={submitEdit}>
+        <input className={`
+          block mb-1
+          ${!isEditing ? "hidden" : ""}
+        `} 
+        value={editValue}
+        onChange={handleChange}
+        type="text"
+        />
+        </form>
+        
         <span className="text-sm font-mono">
           {new Date(task.date).toLocaleDateString("en-US", {
             year: "numeric",
@@ -33,12 +76,27 @@ const ListItem = ({ task }: IListItemProps) => {
           })}
         </span>
       </div>
-      <div className="flex gap-2">
-        <button className="flex justify-center items-center bg-sky-700 h-[52px] w-[52px] rounded-lg hover:bg-sky-600">
+      <div className={`
+        flex gap-2
+        ${isEditing ? "hidden" : ""}
+      `}>
+        <button onClick={() => toggleIsEditing(isEditing, task.name)} className="flex justify-center items-center bg-sky-700 h-[52px] w-[52px] rounded-lg hover:bg-sky-600">
           <Pencil/>
         </button>
         <button onClick={() => removeItem(task.id)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
           <Trash/>
+        </button>
+      </div>
+
+      <div className={`
+        flex gap-2
+        ${!isEditing ? "hidden" : ""}
+      `}>
+        <button type="submit" form="editName" className="flex justify-center items-center bg-green-700 h-[52px] w-[52px] rounded-lg hover:bg-green-600">
+          <Check/>
+        </button>
+        <button onClick={() => toggleIsEditing(isEditing)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
+          <X/>
         </button>
       </div>
     </li>
