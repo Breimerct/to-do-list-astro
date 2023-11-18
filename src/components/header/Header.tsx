@@ -3,7 +3,7 @@ import "./Header.scss";
 import useTaskStore, { type ITask } from "../../store/task.store";
 
 const Header = () => {
-  const { addTask, tasks } = useTaskStore();
+  const { addTask } = useTaskStore();
   const [search, setSearch] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
