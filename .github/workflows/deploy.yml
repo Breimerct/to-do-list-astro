@@ -35,9 +35,6 @@ jobs:
       name: github-pages
       url: https://github.com/Breimerct/to-do-list-astro
     steps:
-      - name: Install Dependencies (ejemplo con npm)
-        run: npm run build
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
