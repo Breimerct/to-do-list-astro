@@ -26,7 +26,6 @@ const ListItem = ({ task }: IListItemProps) => {
 
   const submitEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const updatedTask:ITask = {
       date: task.date,
       id: task.id,
@@ -34,7 +33,7 @@ const ListItem = ({ task }: IListItemProps) => {
       status: task.status
     }
     updateTask({id: updatedTask.id, task: updatedTask});
-    setIsEditing(!isEditing);
+    toggleIsEditing(isEditing);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,9 +56,10 @@ const ListItem = ({ task }: IListItemProps) => {
         ${isEditing ? "hidden" : ""}
         `}>{task.name}</p>
 
-      <form id="editName" onSubmit={submitEdit}>
+      <form id={"edit"+task.id} onSubmit={submitEdit}>
         <input className={`
           block mb-1
+          w-full
           ${!isEditing ? "hidden" : ""}
         `} 
         value={editValue}
@@ -92,10 +92,10 @@ const ListItem = ({ task }: IListItemProps) => {
         flex gap-2
         ${!isEditing ? "hidden" : ""}
       `}>
-        <button type="submit" form="editName" className="flex justify-center items-center bg-green-700 h-[52px] w-[52px] rounded-lg hover:bg-green-600">
+        <button type="submit" form={"edit"+task.id} className="flex justify-center items-center bg-green-700 h-[52px] w-[52px] rounded-lg hover:bg-green-600">
           <Check/>
         </button>
-        <button onClick={() => toggleIsEditing(isEditing)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
+        <button onClick={() => toggleIsEditing(isEditing, task.name)}  className="flex justify-center items-center bg-red-800 h-[52px] w-[52px] rounded-lg hover:bg-red-600">
           <CloseIcon/>
         </button>
       </div>
